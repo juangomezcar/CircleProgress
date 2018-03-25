@@ -28,6 +28,7 @@ public class ArcProgress extends View {
     private float suffixTextSize;
     private float bottomTextSize;
     private String bottomText;
+    private String text;
     private float textSize;
     private int textColor;
     private float progress = 0;
@@ -98,6 +99,7 @@ public class ArcProgress extends View {
     protected void initByAttributes(TypedArray attributes) {
         finishedStrokeColor = attributes.getColor(R.styleable.ArcProgress_arc_finished_color, default_finished_color);
         unfinishedStrokeColor = attributes.getColor(R.styleable.ArcProgress_arc_unfinished_color, default_unfinished_color);
+        text = attributes.getString(R.styleable.ArcProgress_arc_text);
         textColor = attributes.getColor(R.styleable.ArcProgress_arc_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.ArcProgress_arc_text_size, default_text_size);
         arcAngle = attributes.getFloat(R.styleable.ArcProgress_arc_angle, default_arc_angle);
@@ -180,6 +182,14 @@ public class ArcProgress extends View {
             this.max = max;
             invalidate();
         }
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public float getBottomTextSize() {
@@ -286,16 +296,16 @@ public class ArcProgress extends View {
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        String text = String.valueOf(getProgress());
-        if (!TextUtils.isEmpty(text)) {
+        String textToPrint = text == null ? String.valueOf(getProgress()) : text;
+        if (!TextUtils.isEmpty(textToPrint)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
             float textHeight = textPaint.descent() + textPaint.ascent();
             float textBaseline = (getHeight() - textHeight) / 2.0f;
-            canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
+            canvas.drawText(textToPrint, (getWidth() - textPaint.measureText(textToPrint)) / 2.0f, textBaseline, textPaint);
             textPaint.setTextSize(suffixTextSize);
             float suffixHeight = textPaint.descent() + textPaint.ascent();
-            canvas.drawText(suffixText, getWidth() / 2.0f  + textPaint.measureText(text) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
+            canvas.drawText(suffixText, getWidth() / 2.0f  + textPaint.measureText(textToPrint) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
         }
 
         if(arcBottomHeight == 0) {

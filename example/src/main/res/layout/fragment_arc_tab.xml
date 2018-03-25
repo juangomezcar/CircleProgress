@@ -11,7 +11,8 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:arc_progress="40"
-        app:arc_bottom_text="Hello"/>
+        app:arc_bottom_text="Hello"
+        app:arc_text="12/18"/>
 
     <com.github.lzyzsd.circleprogress.ArcProgress
         android:id="@+id/arc_progress2"
