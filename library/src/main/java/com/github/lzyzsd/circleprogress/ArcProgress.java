@@ -296,7 +296,7 @@ public class ArcProgress extends View {
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        String textToPrint = text == null ? String.valueOf(getProgress()) : text;
+        String textToPrint = text == null ? String.valueOf(getProgress()).replaceAll(".0$", "") : text;
         if (!TextUtils.isEmpty(textToPrint)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
